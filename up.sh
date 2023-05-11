@@ -1,9 +1,9 @@
 #!/bin/bash
 
-export GAZELLE_PORT=8080
+export GAZELLE_PORT=9090
 export OCELOT_PORT=34000
-export PHPMYADMIN_PORT=8081
-export PATH_TO_GAZELLE_REPO=../Gazelle
+export PHPMYADMIN_PORT=9091
+export PATH_TO_GAZELLE_REPO=../Oppaitime-Gazelle
 export PATH_TO_CONFIG_FILES=./devconfig
 
 rm -rf docker-compose.yml

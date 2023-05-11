@@ -1,22 +1,33 @@
 # debian jessie base
-FROM debian:8.7
+FROM ubuntu:18.04
+
 
 # upgrade distro and install wget
 RUN apt-get update && apt-get -y dist-upgrade && apt-get install -y wget
 
+RUN apt install -y software-properties-common
+
+RUN add-apt-repository ppa:ondrej/php
+
 # dotdeb needed for PHP7
-RUN echo "deb http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list.d/dotdeb.list
-RUN wget -O- http://www.dotdeb.org/dotdeb.gpg | apt-key add -
+# RUN echo "deb http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list.d/dotdeb.list
+# RUN wget -O- http://www.dotdeb.org/dotdeb.gpg | apt-key add -
 
 # gazelle deps
-RUN apt-get update && apt-get install -y git nginx mysql-client php7.0-fpm libmysql++-dev \
-                       libmysqld-dev php7.0-mcrypt php7.0-mbstring \
-                       php7.0-mysql php7.0-cli libpng-dev libmcrypt-dev \
-                       libxml2-dev binutils libev-dev php-soap php-pear \
-                       php7.0-curl php7.0-gd sendmail php7.0-apcu-bc php7.0-apcu
+RUN apt-get update && apt-get install -y git nginx mysql-client 
+
+RUN apt-get install -y libmysql++-dev libmysqld-dev \
+	libpng-dev libmcrypt-dev \
+        libxml2-dev binutils libev-dev sendmail
+
+RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y php7.0-fpm php7.0-mcrypt php7.0-mbstring \
+                       php7.0-mysql php7.0-cli \
+                       php7.0-curl php7.0-gd php7.0-apcu-bc php7.0-apcu
+
+RUN apt-get install -y php-soap php-pear php7.0-memcached
 
 # install memcache module for php (need this one to support PHP7)
-RUN wget http://ftp.us.debian.org/debian/pool/main/p/php-memcache/php-memcache_3.0.9~20160311.4991c2f-5_amd64.deb && dpkg -i *.deb && rm -rf *.deb
+# RUN wget http://ftp.us.debian.org/debian/pool/main/p/php-memcache/php-memcache_3.0.9~20160311.4991c2f-5_amd64.deb && dpkg -i *.deb && rm -rf *.deb
 
 # nginx site config
 ADD default /etc/nginx/sites-available/default
@@ -26,6 +37,8 @@ RUN rm -rf /var/www/html
 
 # create torrent storage dir
 RUN mkdir /var/torrents
+
+RUN mkdir /run/php
 
 # access to the webserver
 EXPOSE 80

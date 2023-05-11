@@ -1,4 +1,4 @@
-FROM debian:8.7
+FROM ubuntu:18.04
 
 # upgrade distro and install ocelot deps
 RUN apt-get update && apt-get -y dist-upgrade && \

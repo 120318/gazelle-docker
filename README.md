@@ -32,7 +32,7 @@ Docker is our current approach for easily deploying the entire tracker stack on 
 
 Before you can fire up Gazelle, you'll need to clone it (in addition to this repo). Pick a directory to keep your dev resources in and pull down the repos:
 
-    git clone https://git.oppaiti.me/Oppaitime/Gazelle.git
+    git clone https://github.com/spaghetti2514/Oppaitime-Gazelle.git
     git clone https://github.com/learnbitsdev/gazelle-docker.git
 
 It is important that you clone both of these repos to the same directory. Also, do not rename the "Gazelle" directory.
